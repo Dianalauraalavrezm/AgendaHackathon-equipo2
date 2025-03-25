@@ -1,52 +1,73 @@
-package org.generation;
+package org.generation.model;
 
-import org.generation.model.Agenda;
-import org.generation.model.Contactos;
 import org.generation.service.AgendaService;
-
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
-    public class Main {
-        public static void main(String[] args) {
-            Agenda agenda = new Agenda(new ArrayList<>());
-            AgendaService agendaService = new AgendaService(agenda);
+public class Main {
 
-            // Agregamos algunos contactos de prueba
-            agenda.añadirContacto(new Contactos(1, "Diana", "Pérez", "12345678"));
-            agenda.añadirContacto(new Contactos(2, "Juan", "López", "98765432"));
+    public static void main(String[] args) {
+        Agenda agenda = new Agenda(); // Crear la agenda
+        AgendaService agendaService = new AgendaService(agenda); // Crear el servicio de agenda
+        Scanner scanner = new Scanner(System.in);
+        boolean salir = false;
 
-            Scanner scanner = new Scanner(System.in);
-            int opcion;
+        while (!salir) {
+            System.out.println("\n--- Menú ---");
+            System.out.println("1. Agregar Contacto");
+            System.out.println("2. Lista de Contactos");
+            System.out.println("3. Buscar Contacto");
+            System.out.println("4. Eliminar Contacto");
+            System.out.println("5. Modificar Teléfono");
+            System.out.println("6. Salir");
+            System.out.print("Seleccione una opción: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Para consumir el salto de línea
 
-            do {
-                System.out.println("\n📒 MENU AGENDA");
-                System.out.println("1️⃣ Listar contactos");
-                System.out.println("2️⃣ Buscar contacto por nombre");
-                System.out.println("0️⃣ Salir");
-                System.out.print("👉 Elige una opción: ");
-                opcion = scanner.nextInt();
-                scanner.nextLine(); // Limpiar buffer
-
-                switch (opcion) {
-                    case 1:
-                        agendaService.listarContactos();
-                        break;
-                    case 2:
-                        System.out.print("🔍 Ingresa el nombre del contacto: ");
-                        String nombre = scanner.nextLine();
-                        agendaService.buscaContacto(nombre);
-                        break;
-                    case 0:
-                        System.out.println("👋 Saliendo...");
-                        break;
-                    default:
-                        System.out.println("⚠️ Opción inválida.");
-                }
-            } while (opcion != 0);
-
-            scanner.close();
+            switch (opcion) {
+                case 1:
+                    System.out.println("Haz seleccionado 'Agregar un contacto'.");
+                    agendaService.agregarContacto();
+                    esperarSegundos(2);
+                    break;
+                case 2:
+                    System.out.println("Haz seleccionado 'Lista de Contactos'.");
+                    agendaService.listarContactos();
+                    esperarSegundos(5);
+                    break;
+                case 3:
+                    System.out.println("Haz seleccionado 'Buscar Contacto'.");
+                    agendaService.buscarContacto();
+                    esperarSegundos(5);
+                    break;
+                case 4:
+                    System.out.println("Haz seleccionado 'Eliminar Contacto'.");
+                    agendaService.eliminarContacto();
+                    esperarSegundos(2);
+                    break;
+                case 5:
+                    System.out.println("Haz seleccionado 'Modificar Teléfono'.");
+                    agendaService.modificarTelefono();
+                    esperarSegundos(2);
+                    break;
+                case 6:
+                    salir = true;
+                    System.out.println("¡Hasta pronto!");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
         }
+
     }
 
+    public static void esperarSegundos(int segundos) {
+        try {
+            TimeUnit.SECONDS.sleep(segundos);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Se interrumpió la pausa.");
+        }
+
+    }
 }
