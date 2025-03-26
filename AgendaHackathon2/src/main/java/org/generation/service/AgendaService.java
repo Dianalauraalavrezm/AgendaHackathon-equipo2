@@ -1,8 +1,8 @@
 package org.generation.service;
 
+import org.generation.excepciones.AgendaLlenaException;
 import org.generation.model.Agenda;
 import org.generation.model.Contactos;
-
 import java.util.Scanner;
 
 public class AgendaService {
@@ -16,16 +16,21 @@ public class AgendaService {
 
     // Metodo para agregar un contacto
     public void agregarContacto() {
-        System.out.print("Ingrese el nombre del contacto: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Ingrese el apellido del contacto: ");
-        String apellido = scanner.nextLine();
-        System.out.print("Ingrese el teléfono del contacto: ");
-        String telefono = scanner.nextLine();
+        try {
+            agenda.agendaLlena();
+            System.out.print("Ingrese el nombre del contacto: ");
+            String nombre = scanner.nextLine();
+            System.out.print("Ingrese el apellido del contacto: ");
+            String apellido = scanner.nextLine();
+            System.out.print("Ingrese el teléfono del contacto: ");
+            String telefono = scanner.nextLine();
 
-        Contactos nuevoContacto = new Contactos(nombre, apellido, telefono);
-        agenda.agregarContacto(nuevoContacto);
-        System.out.println("Contacto agregado con éxito.");
+            Contactos nuevoContacto = new Contactos(nombre, apellido, telefono);
+            agenda.agregarContacto(nuevoContacto);
+            System.out.println("Contacto agregado con éxito.");
+        } catch (AgendaLlenaException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     // Metodo para listar todos los contactos
@@ -70,4 +75,13 @@ public class AgendaService {
             System.out.println("Contacto no encontrado.");
         }
     }
+
+    // Metodo para verificar si la agenda está llena
+    public void agendaLlena() throws AgendaLlenaException {
+        if (agenda.agendaLlena()) {
+            throw new AgendaLlenaException("La agenda está llena. No se pueden agregar más contactos.");
+        }
+    }
+
+
 }

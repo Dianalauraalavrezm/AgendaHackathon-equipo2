@@ -23,36 +23,41 @@ public class Main {
             System.out.println("5. Modificar Teléfono");
             System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
-            int opcion = scanner.nextInt();
+            String opcion = scanner.nextLine();
             scanner.nextLine();  // Para consumir el salto de línea
 
             switch (opcion) {
-                case 1:
+                case "1":
                     System.out.println("Haz seleccionado 'Agregar un contacto'.");
                     agendaService.agregarContacto();
+                    System.out.println("Aún quedan " + agenda.espaciosLibres() + " espacios disponibles.");
                     esperarSegundos(2);
                     break;
-                case 2:
+                case "2":
                     System.out.println("Haz seleccionado 'Lista de Contactos'.");
                     agendaService.listarContactos();
+                    System.out.println("Aún quedan " + agenda.espaciosLibres() + " espacios disponibles.");
                     esperarSegundos(5);
                     break;
-                case 3:
+                case "3":
                     System.out.println("Haz seleccionado 'Buscar Contacto'.");
                     agendaService.buscarContacto();
+                    System.out.println("Aún quedan " + agenda.espaciosLibres() + " espacios disponibles.");
                     esperarSegundos(5);
                     break;
-                case 4:
+                case "4":
                     System.out.println("Haz seleccionado 'Eliminar Contacto'.");
                     agendaService.eliminarContacto();
+                    System.out.println("Aún quedan " + agenda.espaciosLibres() + " espacios disponibles.");
                     esperarSegundos(2);
                     break;
-                case 5:
+                case "5":
                     System.out.println("Haz seleccionado 'Modificar Teléfono'.");
                     agendaService.modificarTelefono();
+                    System.out.println("Aún quedan " + agenda.espaciosLibres() + " espacios disponibles.");
                     esperarSegundos(2);
                     break;
-                case 6:
+                case "6":
                     salir = true;
                     System.out.println("¡Hasta pronto!");
                     break;
