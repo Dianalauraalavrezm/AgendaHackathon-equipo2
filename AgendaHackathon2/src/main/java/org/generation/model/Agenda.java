@@ -1,8 +1,11 @@
 package org.generation.model;
 
+import org.generation.excepciones.AgendaLlenaException;
+
 import java.util.ArrayList;
 
 public class Agenda {
+    private static final int maxContactos = 10;
     private ArrayList<Contactos> contactos; // Aquí almacenaremos los contactos
 
     public Agenda() {
@@ -54,4 +57,19 @@ public class Agenda {
         }
         return false; // Contacto no encontrado
     }
+
+    // Metodo para verificar si la agenda está llena
+    public boolean agendaLlena() throws AgendaLlenaException {
+        if (contactos.size() >= maxContactos) {
+            throw new AgendaLlenaException("La agenda está llena. No hay espacio disponible para nuevos contactos.");
+        }
+        return false;
+    }
+
+    // Metodo para mostrar cuántos espacios libres hay
+    public int espaciosLibres() {
+        return maxContactos - contactos.size();
+    }
+
+
 }
